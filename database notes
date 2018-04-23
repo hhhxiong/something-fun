@@ -1,0 +1,72 @@
+Having与Where的区别
+where 子句的作用是在对查询结果进行分组前，将不符合where条件的行去掉，即在分组之前过滤数据，where条件中不能
+
+包含聚组函数，使用where条件过滤出特定的行。
+having 子句的作用是筛选满足条件的组，即在分组之后过滤数据，条件中经常包含聚组函数，使用having 条件过滤出特
+
+定的组，也可以使用多个分组标准进行分组。
+
+“Group By”从字面意义上理解就是根据“By”指定的规则对数据进行分组，所谓的分组就是将一个“数据集”划分成若
+
+干个“小区域”，然后针对若干个“小区域”进行数据处理。
+
+Aggregate function ignore Nulls ，（聚合函数忽略NULL），当使用聚合函数时，会自动忽略NULL值
+比如说：
+select count(died) most_recent_death
+from people
+where died is not null  的结果是5653 
+而
+select count(died) most_recent_death
+from people   
+的结果也是5653
+
+using(): sql 中联接SQL语句中，ON子句的语法格式为：table1.column_name = table2.column_name。
+当模式设计对联接表的列采用了相同的命名样式时，就可以使用 USING 语法来简化 ON 语法，格式为：USING
+
+(column_name)。
+
+coalesce(x.number_of_movies, 0)   当逗号前为Null时，换成0
+
+默认情况下，UNION 运算符选择一个不同的值。如果允许重复值，请使用 UNION ALL。
+
+MINUS(减去),INTERSECT(交集)和UNION ALL(并集);MINUS是从第一 个查询结果减去第二个查询结果,如果有相交部分就减
+
+去相交部分;否则和第一个查询结果没有区别. INTERSECT是两个查询结果的交集,UNION ALL是两个查询的并集;
+
+EXISTS(包括 NOT EXISTS )子句的返回值是一个BOOL值。 EXISTS内部有一个子查询语句(SELECT ... FROM...)， 我将其
+
+称为EXIST的内查询语句。其内查询语句返回一个结果集。 EXISTS子句根据其内查询语句的结果集空或者非空，返回一个
+
+布尔值。
+一种通俗的可以理解为：将外查询表的每一行，代入内查询作为检验，如果内查询返回的结果取非空值，则EXISTS子句返
+
+回TRUE，这一行行可作为外查询的结果行，否则不能作为结果。
+分析器会先看语句的第一个词，当它发现第一个词是SELECT关键字的时候，它会跳到FROM关键字，然后通过FROM关键字找
+
+到表名并把表装入内存。接着是找WHERE关键字，如果找不到则返回到SELECT找字段解析，如果找到WHERE，则分析其中的
+
+条件，完成后再回到SELECT分析字段。最后形成一张我们要的虚表。
+WHERE关键字后面的是条件表达式。条件表达式计算完成后，会有一个返回值，即非0或0，非0即为真(true)，0即为假
+
+(false)。同理WHERE后面的条件也有一个返回值，真或假，来确定接下来执不执行SELECT。
+分析器先找到关键字SELECT，然后跳到FROM关键字将STUDENT表导入内存，并通过指针找到第一条记录，接着找到WHERE关
+
+键字计算它的条件表达式，如果为真那么把这条记录装到一个虚表当中，指针再指向下一条记录。如果为假那么指针直接
+
+指向下一条记录，而不进行其它操作。一直检索完整个表，并把检索出来的虚拟表返回给用户。EXISTS是条件表达式的一
+
+部分，它也有一个返回值(true或false)。
+
+① select * from table limit 2,1;                 
+
+//含义是跳过2条取出1条数据，limit后面是从第2条开始读，读取1条信息，即读取第3条数据
+
+② select * from table limit 2 offset 1;      
+
+//含义是从第1条（不包括）数据开始取出2条数据，limit后面跟的是2条数据，offset后面是从第1条开始读取，即读取
+
+第2,3条
+
+row_number() assigns distinct, sequential numbers to everyone，rank() assigns the same number to ties, but 
+
+there is a gap in ranks,dense_rank() also assigns the same number to ties, with no gap
